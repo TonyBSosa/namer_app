@@ -37,12 +37,14 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<MyAppState>();
+    var pair = appState.current;
 
     return Scaffold(
       body: Column(
         children: [
-          Text('A random  AWESOME idea:'),
-          Text(appState.current.asLowerCase),
+       
+          Text(pair.asLowerCase),
+             BigCard(pair:pair),
                    ElevatedButton(
             onPressed: () {
               appState.getNext();  
@@ -51,6 +53,32 @@ class MyHomePage extends StatelessWidget {
           ),
 
         ],
+      ),
+    );
+  }
+}
+
+class BigCard extends StatelessWidget {
+  const BigCard({
+    Key? key,
+    required this.pair,
+
+  }):  super(key: key);
+  final WordPair pair;
+
+  @override
+  Widget build(BuildContext context) {
+    
+ var theme = Theme.of(context);
+ var  style = theme.textTheme.displayMedium!.copyWith(
+      color: theme.colorScheme.onPrimary, 
+ );
+
+    return Card(
+      color: theme.colorScheme.primary,
+      child: Padding(
+        padding: const EdgeInsets.all(60),
+        child: Text(pair.asLowerCase, style: style),
       ),
     );
   }
